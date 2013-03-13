@@ -10,7 +10,7 @@ module FozzieRedis
 
   def run
     bucket_prefix = ENV['REDIS_NAME']
-    redis         = Redis.new(host: ENV['REDIS_HOST'], port: ENV['REDIS_PORT'], password: ENV['REDIS_PASSWORD'], path: ENV['REDIS_PATH'])
+    redis         = Redis.new(host: ENV['REDIS_HOST'], port: ENV['REDIS_PORT'], password: ENV['REDIS_PASSWORD'])
 
     redis.info.each do |k, v|
       next unless SKIP_KEYS_REGEX.map { |re| k.match(/#{re}/)}.compact.empty?
