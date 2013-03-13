@@ -1,4 +1,7 @@
 require 'redis'
+require 'forwardable'
+require 'fozzie'
+
 
 module FozzieRedis
   extend self
@@ -10,8 +13,9 @@ module FozzieRedis
     'master_port', 'mem_allocator', 'multiplexing_api', 'process_id',
     'redis_git_dirty', 'redis_git_sha1', 'redis_version', '^role',
     'run_id', '^slave', 'used_memory_human', 'used_memory_peak_human', 'cpu']
-
+ 
   def run
+    configure_fozzie
     bucket_prefix = ENV['REDIS_NAME']
     redis         = Redis.new(host: ENV['REDIS_HOST'], port: ENV['REDIS_PORT'], password: ENV['REDIS_PASSWORD'])
 
@@ -31,7 +35,14 @@ module FozzieRedis
     end
   end
 
+  def configure_fozzie
+    Fozzie.configure { |c|
+      c.host   = ENV['FOZZIE_HOST']
+      c.prefix = ''
+    }
+  end
+
   def gauge(key, value)
-    puts "#{key} => #{value}"
+    Stats.gauge key, value
   end
 end
