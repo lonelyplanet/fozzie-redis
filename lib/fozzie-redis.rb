@@ -3,7 +3,7 @@ require 'redis'
 module FozzieRedis
   extend self
 
-  INTERESTING_KEYS_REGEX = %w(used_memory mem_fragmentation_ratio total_connections_received total_commands_processed expired _keys keyspace ^db)
+  INTERESTING_KEYS_REGEX = %w(used_memory mem_fragmentation_ratio total_connections_received total_commands_processed expired _keys keyspace ^db memory$ memory_rss$ memory_peak$ )
 
   # DEPRECATED
   SKIP_KEYS_REGEX = ['gcc_version', 'master_host', 'master_link_status',
