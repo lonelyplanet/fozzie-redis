@@ -16,7 +16,7 @@ module FozzieRedis
     redis         = Redis.new(host: ENV['REDIS_HOST'], port: ENV['REDIS_PORT'], password: ENV['REDIS_PASSWORD'])
 
     redis.info.each do |k, v|
-      next unless SKIP_KEYS_REGEX.map { |re| k.match(/#{re}/)}.compact.empty?
+      next unless INTERESTING_KEYS_REGEX.map { |re| k.match(/#{re}/)}.compact.any?
 
       if k =~ /^db/ # "db0"=>"keys=123,expires=12"
         keys, expires = v.split(',')
