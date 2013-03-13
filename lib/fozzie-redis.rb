@@ -3,10 +3,13 @@ require 'redis'
 module FozzieRedis
   extend self
 
+  INTERESTING_KEYS_REGEX = %w(used_memory mem_fragmentation_ratio total_connections_received total_commands_processed expired _keys keyspace ^db)
+
+  # DEPRECATED
   SKIP_KEYS_REGEX = ['gcc_version', 'master_host', 'master_link_status',
     'master_port', 'mem_allocator', 'multiplexing_api', 'process_id',
     'redis_git_dirty', 'redis_git_sha1', 'redis_version', '^role',
-    'run_id', '^slave', 'used_memory_human', 'used_memory_peak_human']
+    'run_id', '^slave', 'used_memory_human', 'used_memory_peak_human', 'cpu']
 
   def run
     bucket_prefix = ENV['REDIS_NAME']
