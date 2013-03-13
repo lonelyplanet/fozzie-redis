@@ -38,7 +38,7 @@ module FozzieRedis
   def configure_fozzie
     Fozzie.configure { |c|
       c.host   = ENV['FOZZIE_HOST']
-      c.prefix = ''
+      c.prefix = []
     }
   end
 
